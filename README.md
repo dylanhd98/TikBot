@@ -1,2 +1,2 @@
 # TikBot
-An automated reddit video genorator meant to immitate those seen on TikTok
+An automated reddit video generator with the goal to immitate those seen on TikTok
