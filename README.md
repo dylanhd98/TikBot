@@ -3,9 +3,9 @@ An automated reddit video generator with the goal to immitate those seen on TikT
 
   1. run the .BAT file to install modules or manually if you wish 
   2. run the .py file (woah)
-  3. do the first time set up, this includes following instructions on setting up a reddit application
+  3. do the first time set up, this includes following instructions on setting up OAuth2 for reddit application - https://github.com/reddit-archive/reddit/wiki/OAuth2
   4. download background footage with included in-program tool
-  5. generate video from scratch, preset(once added), or from post IDs for human curation of posts - https://github.com/reddit-archive/reddit/wiki/OAuth2
+  5. generate video from scratch, preset(once added), or from post IDs for human curation of posts 
   6. you got the thing now yay!
 
 todo:
