@@ -27,7 +27,7 @@ what it looks like :O
              ╚═╝   ╚═╝╚═╝  ╚═╝╚═════╝  ╚═════╝    ╚═╝   
 
   Enter Choice:
-      1.Video From Scratch
+      1.Video From Scratch 
       2.Video From Preset
       3.Video From Post ID(s)
       4.Manage Presets
