@@ -8,6 +8,7 @@ An automated reddit video generator with the goal to immitate those seen on TikT
   5. generate video from scratch, preset(once added), or from post IDs for human curation of posts 
   6. you got the thing now yay!
 
+
 todo:
   * make faster because it is slow and i want the videos now
   * add presets 
