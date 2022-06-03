@@ -89,7 +89,7 @@ class VideoHandler:
         self.audioCount = 0
         self.screen = ScreenShotHandler()
         self.speech = SpeechHandler()
-        self.voices = ["en-CA-ClaraNeural","en-CA-LiamNeural","en-AU-WilliamNeural","en-AU-NatashaNeural","en-NZ-MitchellNeural","en-NZ-MollyNeural","en-GB-LibbyNeural","en-GB-SoniaNeural","en-GB-RyanNeural","en-US-AmberNeural","en-US-AriaNeural","en-US-AshleyNeural","en-US-CoraNeural","en-US-ElizabethNeural","en-US-JennyNeural","en-US-MichelleNeural","en-US-MonicaNeural","en-US-SaraNeural","en-US-BrandonNeural","en-US-ChristopherNeural","en-US-JacobNeural","en-US-GuyNeural","en-US-EricNeural"]
+        self.voices = ["en-CA-ClaraNeural","en-CA-LiamNeural","en-AU-WilliamNeural","en-AU-NatashaNeural","en-NZ-MitchellNeural","en-NZ-MollyNeural","en-GB-LibbyNeural","en-GB-SoniaNeural","en-GB-RyanNeural","en-US-AmberNeural","en-US-AriaNeural","en-US-AshleyNeural","en-US-CoraNeural","en-US-ElizabethNeural","en-US-JennyNeural","en-US-MichelleNeural","en-US-MonicaNeural","en-US-SaraNeural","en-US-BrandonNeural","en-US-ChristopherNeural","en-US-GuyNeural","en-US-EricNeural"]
 
     def genPost(self,submission):
         clip = ColorClip(size=(1080, 1920), color=[0, 0, 255])
