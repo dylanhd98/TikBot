@@ -1,5 +1,7 @@
 # TikBot
 ## An automated reddit video generator with the goal to immitate those seen on TikTok
+this program doesnt directly grab screenshots like many other similar ones, it gets the raw text from the reddit api and reconstructs its into something looking like a screenshot, as a consiquence if my code isnt too much of a mess you can customize how screenshots are constructed
+
 
 ### steps to do the cool thing
   1. run the .BAT file to install modules or manually if you wish 
