@@ -1,11 +1,11 @@
 # TikBot
 An automated reddit video generator with the goal to immitate those seen on TikTok
 
-run the .BAT file to install modules or manually if you wish 
-run the .py file (woah)
-download background footage with included in-program tool
-generate video from scratch, preset(once added), or from post IDs for human curation of posts
-you got the thing now yay!
+  1. run the .BAT file to install modules or manually if you wish 
+  2. run the .py file (woah)
+  3. download background footage with included in-program tool
+  4. generate video from scratch, preset(once added), or from post IDs for human curation of posts
+  5. you got the thing now yay!
 
 todo:
 -make faster because it is slow and i want the videos now
