@@ -19,17 +19,4 @@ todo:
 
 what it looks like :O 
 
-          ████████╗██╗██╗  ██╗██████╗  ██████╗ ████████╗
-          ╚══██╔══╝██║██║ ██╔╝██╔══██╗██╔═══██╗╚══██╔══╝
-             ██║   ██║█████╔╝ ██████╔╝██║   ██║   ██║   
-             ██║   ██║██╔═██╗ ██╔══██╗██║   ██║   ██║   
-             ██║   ██║██║  ██╗██████╔╝╚██████╔╝   ██║   
-             ╚═╝   ╚═╝╚═╝  ╚═╝╚═════╝  ╚═════╝    ╚═╝   
-
-  Enter Choice:
-      1.Video From Scratch 
-      2.Video From Preset
-      3.Video From Post ID(s)
-      4.Manage Presets
-      5.Manage Background Footage
-  >
+![image](https://user-images.githubusercontent.com/77278327/171794288-8a525a1a-a113-4670-8ab1-aeb3f16190b0.png)
