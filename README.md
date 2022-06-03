@@ -10,7 +10,7 @@
   6. you got the thing now yay!
 
 
-todo:
+### todo:
   * make faster because it is slow and i want the videos now
   * add presets 
   * add bg audio
