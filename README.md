@@ -1,5 +1,5 @@
 # TikBot
-#An automated reddit video generator with the goal to immitate those seen on TikTok
+# An automated reddit video generator with the goal to immitate those seen on TikTok
 
   1. run the .BAT file to install modules or manually if you wish 
   2. run the .py file (woah)
