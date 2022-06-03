@@ -1,6 +1,7 @@
 # TikBot
 ## An automated reddit video generator with the goal to immitate those seen on TikTok
 
+###steps to do the cool thing
   1. run the .BAT file to install modules or manually if you wish 
   2. run the .py file (woah)
   3. do the first time set up, this includes following instructions on setting up OAuth2 for reddit application - https://github.com/reddit-archive/reddit/wiki/OAuth2
