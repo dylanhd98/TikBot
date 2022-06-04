@@ -233,8 +233,7 @@ class ScreenShotHandler:
             if newLine == True and string[x]==" ":
                 string = string[:x] + '\n' + string[x+1:]
                 newLine = False
-
-        return string
+        return string.split('\n')
 
 #downloads yt videos
 class YtHandler:
