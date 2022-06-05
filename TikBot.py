@@ -211,7 +211,8 @@ class ScreenShotHandler:
         img = Image.new('RGB', (self.maxWidth, 1000), self.redditBG)
         draw = ImageDraw.Draw(img)
         draw.text((10, 5), "r/"+str(submission.subreddit), font=self.redditFontBoldSmall)
-        draw.text(((len(str(submission.subreddit))*13)+30, 5), " • Posted by u/"+str(submission.author)+v,font=self.redditFontSmall,fill = self.redditTextFaded)
+        #draw.text(((len(str(submission.subreddit))*13)+30, 5), " • Posted by u/"+str(submission.author)+v,font=self.redditFontSmall,fill = self.redditTextFaded)
+        draw.text(((len(str(submission.subreddit))*13)+30, 5), " • Posted by u/"+str(submission.author),font=self.redditFontSmall,fill = self.redditTextFaded)
         titleStop = self.draw_multiple_line_text(img, str(submission.title), self.redditFontBold, self.redditText, 10, 35)
         crop = self.draw_multiple_line_text(img, str(submission.selftext), self.redditFontSmall, self.redditText, 10, 10+ titleStop) + 10
         w, h = img.size
