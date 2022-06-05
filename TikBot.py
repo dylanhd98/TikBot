@@ -96,7 +96,7 @@ class VideoHandler:
 
 
         # only the good ones
-        self.voices = ["en-CA-ClaraNeural","en-AU-NatashaNeural","en-NZ-MollyNeural","en-GB-LibbyNeural","en-GB-SoniaNeural","en-US-AmberNeural","en-US-AriaNeural","en-US-CoraNeural","en-US-ElizabethNeural","en-US-MichelleNeural","en-US-MonicaNeural","en-US-BrandonNeural","en-US-ChristopherNeural","en-US-EricNeural"]
+        self.voices = ["en-CA-ClaraNeural","en-AU-NatashaNeural","en-NZ-MollyNeural","en-GB-LibbyNeural","en-GB-SoniaNeural","en-US-AmberNeural","en-US-AriaNeural","en-US-CoraNeural","en-US-ElizabethNeural","en-US-MichelleNeural","en-US-MonicaNeural","en-US-BrandonNeural","en-US-EricNeural"]
 
     def genPost(self,submission):
         clip = ColorClip(size=(1080, 1920), color=[0, 0, 255])
