@@ -1,4 +1,6 @@
-praw.ini
 /bgFootage/
 /tempFiles/
-out.mp4
+*.mp3
+*.mp4
+*.png
+*.ini

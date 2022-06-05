@@ -96,16 +96,16 @@ class VideoHandler:
 
 
         # only the good ones
-        self.voices = ["en-CA-ClaraNeural","en-AU-NatashaNeural","en-NZ-MitchellNeural","en-NZ-MollyNeural","en-GB-LibbyNeural","en-GB-SoniaNeural","en-US-AmberNeural","en-US-AriaNeural","en-US-CoraNeural","en-US-ElizabethNeural","en-US-MichelleNeural","en-US-MonicaNeural","en-US-BrandonNeural","en-US-ChristopherNeural","en-US-EricNeural"]
+        self.voices = ["en-CA-ClaraNeural","en-AU-NatashaNeural","en-NZ-MollyNeural","en-GB-LibbyNeural","en-GB-SoniaNeural","en-US-AmberNeural","en-US-AriaNeural","en-US-CoraNeural","en-US-ElizabethNeural","en-US-MichelleNeural","en-US-MonicaNeural","en-US-BrandonNeural","en-US-ChristopherNeural","en-US-EricNeural"]
 
     def genPost(self,submission):
         clip = ColorClip(size=(1080, 1920), color=[0, 0, 255])
         voice = random.choice(self.voices)
         self.screen.genPost(submission,voice)
-        self.speech.genPost(submission,f"tempFiles/audio/temp{self.audioCount}.wav",voice)
+        self.speech.genPost(submission,f"tempFiles/audio/temp{self.audioCount}-{voice}.wav",voice)
 
         img = ImageClip("tempFiles/temp.png")
-        ado = AudioFileClip(f"tempFiles/audio/temp{self.audioCount}.wav")
+        ado = AudioFileClip(f"tempFiles/audio/temp{self.audioCount}-{voice}.wav")
         self.audioCount += 1
 
         clip = clip.set_audio(ado)
@@ -122,10 +122,10 @@ class VideoHandler:
         clip = ColorClip(size=(1080, 1920), color=[0, 0, 255])
         voice = random.choice(self.voices)
         self.screen.genComment(comment,voice)
-        self.speech.genComment(comment,f"tempFiles/audio/temp{self.audioCount}.wav",voice)
+        self.speech.genComment(comment,f"tempFiles/audio/temp{self.audioCount}-{voice}.wav",voice)
 
         img = ImageClip("tempFiles/temp.png")
-        ado = AudioFileClip(f"tempFiles/audio/temp{self.audioCount}.wav")
+        ado = AudioFileClip(f"tempFiles/audio/temp{self.audioCount}-{voice}.wav")
         self.audioCount +=1
 
         clip = clip.set_audio(ado)
