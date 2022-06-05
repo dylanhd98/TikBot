@@ -89,7 +89,14 @@ class VideoHandler:
         self.audioCount = 0
         self.screen = ScreenShotHandler()
         self.speech = SpeechHandler()
-        self.voices = ["en-CA-ClaraNeural","en-CA-LiamNeural","en-AU-WilliamNeural","en-AU-NatashaNeural","en-NZ-MitchellNeural","en-NZ-MollyNeural","en-GB-LibbyNeural","en-GB-SoniaNeural","en-GB-RyanNeural","en-US-AmberNeural","en-US-AriaNeural","en-US-AshleyNeural","en-US-CoraNeural","en-US-ElizabethNeural","en-US-JennyNeural","en-US-MichelleNeural","en-US-MonicaNeural","en-US-SaraNeural","en-US-BrandonNeural","en-US-ChristopherNeural","en-US-GuyNeural","en-US-EricNeural"]
+
+        
+        #all voices
+        #self.voices = ["en-CA-ClaraNeural","en-CA-LiamNeural","en-AU-WilliamNeural","en-AU-NatashaNeural","en-NZ-MitchellNeural","en-NZ-MollyNeural","en-GB-LibbyNeural","en-GB-SoniaNeural","en-GB-RyanNeural","en-US-AmberNeural","en-US-AriaNeural","en-US-AshleyNeural","en-US-CoraNeural","en-US-ElizabethNeural","en-US-JennyNeural","en-US-MichelleNeural","en-US-MonicaNeural","en-US-SaraNeural","en-US-BrandonNeural","en-US-ChristopherNeural","en-US-GuyNeural","en-US-EricNeural"]
+
+
+        # only the good ones
+        self.voices = ["en-CA-ClaraNeural","en-AU-NatashaNeural","en-NZ-MitchellNeural","en-NZ-MollyNeural","en-GB-LibbyNeural","en-GB-SoniaNeural","en-US-AmberNeural","en-US-AriaNeural","en-US-CoraNeural","en-US-ElizabethNeural","en-US-MichelleNeural","en-US-MonicaNeural","en-US-BrandonNeural","en-US-ChristopherNeural","en-US-EricNeural"]
 
     def genPost(self,submission):
         clip = ColorClip(size=(1080, 1920), color=[0, 0, 255])
@@ -195,7 +202,7 @@ class ScreenShotHandler:
         img = Image.new('RGB', (self.maxWidth, 10000), self.redditBG)
         draw = ImageDraw.Draw(img)
         draw.text((10,10),str(comment.author)+v,font = self.redditFontBoldSmall)
-        crop = self.draw_multiple_line_text(img,str(comment.body),self.redditFont,self.redditText,10,35,50) + 10
+        crop = self.draw_multiple_line_text(img,str(comment.body),self.redditFont,self.redditText,10,35) + 10
         w,h = img.size
         im2 = img.crop((0,0,w,crop))
         im2.save(f"tempFiles/temp.png")
@@ -205,8 +212,8 @@ class ScreenShotHandler:
         draw = ImageDraw.Draw(img)
         draw.text((10, 5), "r/"+str(submission.subreddit), font=self.redditFontBoldSmall)
         draw.text(((len(str(submission.subreddit))*13)+30, 5), " • Posted by u/"+str(submission.author)+v,font=self.redditFontSmall,fill = self.redditTextFaded)
-        titleStop = self.draw_multiple_line_text(img, str(submission.title), self.redditFontBold, self.redditText, 10, 35, 50)
-        crop = self.draw_multiple_line_text(img, str(submission.selftext), self.redditFontSmall, self.redditText, 10, 10+ titleStop,60) + 10
+        titleStop = self.draw_multiple_line_text(img, str(submission.title), self.redditFontBold, self.redditText, 10, 35)
+        crop = self.draw_multiple_line_text(img, str(submission.selftext), self.redditFontSmall, self.redditText, 10, 10+ titleStop) + 10
         w, h = img.size
         im2 = img.crop((0, 0, w, crop))
         im2.save(f"tempFiles/temp.png")
@@ -215,24 +222,44 @@ class ScreenShotHandler:
         span = (datetime.datetime.utcnow()-datetime.datetime.utcfromtimestamp(timeStamp))
         return str(span)
 
-    def draw_multiple_line_text(self,image, text, font, text_color, textX,textY,charLimit):
+    def draw_multiple_line_text(self,image, text, font, text_color, textX,textY):
         draw = ImageDraw.Draw(image)
         y_text = textY
-        lines = self.textWrap(text,charLimit)
+        lines = self.textWrap(text,font)
         for line in lines:
             line_width, line_height = font.getsize(line)
             draw.text((textX , y_text),line, font=font, fill=text_color,align="left")
             y_text += line_height
         return y_text
 
-    def textWrap(self,string,charLim):
+    def textWrap(self,string,font):
         newLine = False
-        for x in range(len(string),0,-1):
-            if x % charLim ==0:
-                newLine= True
-            if newLine == True and string[x]==" ":
-                string = string[:x] + '\n' + string[x+1:]
-                newLine = False
+
+        x=0
+        lastSpaceIndex = 0
+        lastXvalue = 0
+
+        insertPositions = []
+        
+        for i in range(len(string)):
+            x+=font.getsize(string[i])[0]
+
+            if x > self.maxWidth-10:
+                insertPositions.append(lastSpaceIndex)
+                x=x-lastXvalue
+
+            if string[i] == " ":
+                lastSpaceIndex = i
+                lastXvalue = x
+
+            if string[i]=="\n":
+                x=0
+
+        for i in insertPositions:
+            string = string[:i] + '\n' + string[i+1:]
+
+        
+        
         return string.split('\n')
 
 #downloads yt videos
@@ -391,10 +418,10 @@ class Menu:
 
         commentNo = int(input("Enter comment number per post\n>"))
 
-        clip = self.edit.postFromIds(self.reddit,ids,commentNo).write_videofile("out.mp4")
+        clip = self.edit.postFromIds(self.reddit,ids,commentNo)#.write_videofile("out.mp4")
         bg = VideoFileClip("bgFootage/"+files[int(bgChoice)])
         
-        self.edit.greenScreen(clip,bg).write_videofile("out.mp4")
+        self.edit.greenScreen(clip,"bgFootage/"+files[int(bgChoice)]).write_videofile("out.mp4",fps = 24)
 
         self.start()
 
