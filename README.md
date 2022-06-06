@@ -13,6 +13,7 @@ this program doesnt directly grab screenshots like many other similar ones, it g
 
 
 ### todo:
+  * Crop screenshots based on line counts 
   * text processor, removes unreadable things like links etc
   * blacklist for accounts and/or words to ignore e.g. automod or swearing
   * make faster because it is slow and i want the videos now
