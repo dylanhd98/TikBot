@@ -17,7 +17,6 @@ this program doesnt directly grab screenshots like many other similar ones, it g
   * text processor, removes unreadable things like links etc
   * blacklist for accounts and/or words to ignore e.g. automod or swearing
   * make faster because it is slow and i want the videos now
-  * remove use of bluescreen in favour of direct editing onto video
   * add presets 
   * add bg audio
   * better module importing for first time setup
