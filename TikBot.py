@@ -153,7 +153,7 @@ class SpeechHandler:
     async def aSpeak(self,string, path,voice):
         communicate = edge_tts.Communicate()   
         with open(path, "wb") as f:
-            async for i in communicate.run(string,voice=voice):
+            async for i in communicate.run(string,voice=voice,rate = "+10%"):
                 if i[2] is not None:
                     f.write(i[2])
 
