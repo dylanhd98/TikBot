@@ -88,7 +88,7 @@ class VideoHandler:
         self.speech = SpeechHandler()
 
         
-        #all voices
+        #all voices can be found here -> https://docs.microsoft.com/en-in/azure/cognitive-services/speech-service/language-support?tabs=speechtotext#text-to-speech
         #self.voices = ["en-CA-ClaraNeural","en-CA-LiamNeural","en-AU-WilliamNeural","en-AU-NatashaNeural","en-NZ-MitchellNeural","en-NZ-MollyNeural","en-GB-LibbyNeural","en-GB-SoniaNeural","en-GB-RyanNeural","en-US-AmberNeural","en-US-AriaNeural","en-US-AshleyNeural","en-US-CoraNeural","en-US-ElizabethNeural","en-US-JennyNeural","en-US-MichelleNeural","en-US-MonicaNeural","en-US-SaraNeural","en-US-BrandonNeural","en-US-ChristopherNeural","en-US-GuyNeural","en-US-EricNeural"]
 
 
