@@ -10,6 +10,7 @@ import datetime
 import moviepy.editor as mpe
 from moviepy.editor import *
 from PIL import Image, ImageFont, ImageDraw
+from tkinter import Tk, filedialog
 
 #general stuff like first time setup etc
 class UtilityHandler:
@@ -27,11 +28,8 @@ class UtilityHandler:
 
         print("""In order to get posts from reddit you must first have 3 pieces of information:
         1. Client ID - The OAuth client ID associated with your registered Reddit application
-
         2. Client Secret - The OAuth client secret associated with your registered Reddit application
-
         3. User agent - a unique identifier
-
         to get this information follow the instructions here : https://github.com/reddit-archive/reddit/wiki/OAuth2
 """)
         clID = input("Client ID\n>")
@@ -264,7 +262,7 @@ class ScreenShotHandler:
         return string.split('\n')
 
 #downloads yt videos
-class YtHandler:
+class BgHandler:
     def download(self,link,name):
         youTube = pytube.YouTube(link)
         stream = youTube.streams.get_highest_resolution()
@@ -275,6 +273,11 @@ class YtHandler:
             stream.download(output_path="tempFiles")
         
         bg =VideoFileClip(f"tempFiles/{name}.mp4")
+        bg = self.crop(bg)
+        print("This may take a while, this saves time when actually making the videos by re cropping and scaling :)")
+        bg.write_videofile(f"bgFootage/{name}.mp4",fps = 24)
+
+    def crop(self,bg):
         bg= bg.without_audio()
         w,h = bg.size
         #aspect ratio correction
@@ -286,8 +289,8 @@ class YtHandler:
 
         w,h = bg.size
         bg = bg.resize(1080/w)
-        print("This may take a while, this saves time when actually making the videos by re cropping and scaling :)")
-        bg.write_videofile(f"bgFootage/{name}.mp4",fps = 24)
+        return bg
+
 
 #user interaction with the rest of the stuff
 class Menu:
@@ -301,7 +304,7 @@ class Menu:
            ╚═╝   ╚═╝╚═╝  ╚═╝╚═════╝  ╚═════╝    ╚═╝  
             """
 
-        self.yt = YtHandler()
+        self.bg = BgHandler()
         self.edit = EditHandler()
 
         self.reddit = praw.Reddit("bot")
@@ -339,19 +342,30 @@ class Menu:
         for x in range(len(files)):
             print ("    "+str(x)+". "+files[x])
         choice = input("""\nEnter Choice:
-    1.Download New Video
-    2.Delete Video
-    3.Go Back
+    1.Use Video From File
+    2.Download New Video (may break)
+    3.Delete Video
+    4.Go Back
 >""")
 
         if choice == "1":
+            root = Tk()
+            root.withdraw()
+            root.attributes('-topmost', True)
+            open_file = filedialog.askopenfilenames(filetypes=[("Video Files", ".mp4")])[0]
+            vid = self.bg.crop(VideoFileClip(open_file))   
+            vid.write_videofile(f"bgFootage/{os.path.basename(open_file)}.mp4",fps = 24)
+
+        elif choice == "2":
             link = input("Enter link of desired video e.g.\"https://www.youtube.com/watch?v=dQw4w9WgXcQ\"\n>")
             name = input("Enter name of file (no file extention, leave blank for default)\n>")
-            self.yt.download(link,name)
-        elif choice == "2":
+            self.bg.download(link,name)
+
+        elif choice == "3":
             unLuckyNo = int(input("Enter number of file to be deleted\n>"))
             os.remove(f"bgFootage/{files[unLuckyNo]}")
-        elif choice == "3":
+
+        elif choice == "4":
             self.start()
         self.bgManage()
 
