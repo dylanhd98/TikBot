@@ -72,13 +72,12 @@ class EditHandler:
         return concatenate_videoclips(clips,method="chain")
 
 
-    def greenScreen(self,clip,bgPath):
+    def addBg(self,masked_clip,bgPath):
         bg = VideoFileClip(bgPath)
-        masked_clip = clip.fx(mpe.vfx.mask_color, color=[0, 0, 255], s=2,thr = 25)
         masked_clip = masked_clip.set_pos('center')
         randStart = random.randint(0,int(bg.duration-masked_clip.duration))
         bg = bg.subclip(randStart,randStart+masked_clip.duration)
-        final_clip = mpe.CompositeVideoClip([bg,masked_clip]).set_duration(clip.duration)
+        final_clip = mpe.CompositeVideoClip([bg,masked_clip]).set_duration(masked_clip.duration)
         return final_clip
 
 #class for generating clips and assembling them
@@ -97,42 +96,43 @@ class VideoHandler:
         self.voices = ["en-CA-ClaraNeural","en-AU-NatashaNeural","en-NZ-MollyNeural","en-GB-LibbyNeural","en-GB-SoniaNeural","en-US-AmberNeural","en-US-AriaNeural","en-US-CoraNeural","en-US-ElizabethNeural","en-US-MichelleNeural","en-US-MonicaNeural","en-US-BrandonNeural","en-US-EricNeural"]
 
     def genPost(self,submission):
-        clip = ColorClip(size=(1080, 1920), color=[0, 0, 255])
+        #clip = ColorClip(size=(1080, 1920), color=[0, 0, 255])
         voice = random.choice(self.voices)
-        self.screen.genPost(submission,voice)
+        self.screen.genPost(submission)
         self.speech.genPost(submission,f"tempFiles/audio/temp{self.audioCount}-{voice}.wav",voice)
 
         img = ImageClip("tempFiles/temp.png")
         ado = AudioFileClip(f"tempFiles/audio/temp{self.audioCount}-{voice}.wav")
         self.audioCount += 1
 
-        clip = clip.set_audio(ado)
-        clip = clip.set_duration(ado.duration)
-        clip = clip.set_fps(10)
+        #clip = clip.set_audio(ado)
+        #clip = clip.set_duration(ado.duration)
+        #clip = clip.set_fps(10)
 
         scaleNoise = random.random() *0.2
         img = img.set_pos('center').fx(vfx.resize, 1.2-scaleNoise)
 
-        clip = CompositeVideoClip([clip, img.set_start(0).set_duration(ado.duration)])
+        clip = img.set_start(0).set_duration(ado.duration).set_audio(ado)
         return clip
 
     def genComment(self,comment):
-        clip = ColorClip(size=(1080, 1920), color=[0, 0, 255])
+        #clip = ColorClip(size=(1080, 1920), color=[0, 0, 255])
         voice = random.choice(self.voices)
-        self.screen.genComment(comment,voice)
+        self.screen.genComment(comment)
         self.speech.genComment(comment,f"tempFiles/audio/temp{self.audioCount}-{voice}.wav",voice)
 
         img = ImageClip("tempFiles/temp.png")
         ado = AudioFileClip(f"tempFiles/audio/temp{self.audioCount}-{voice}.wav")
         self.audioCount +=1
 
-        clip = clip.set_audio(ado)
-        clip = clip.set_duration(ado.duration)
-        clip = clip.set_fps(10)
+        #clip = clip.set_audio(ado)
+        #clip = clip.set_duration(ado.duration)
+        #clip = clip.set_fps(10)
 
         scaleNoise = random.random()*0.2
         img = img.set_pos('center').fx(vfx.resize, 1.2-scaleNoise)
-        clip = CompositeVideoClip([clip, img.set_start(0).set_duration(ado.duration)])
+
+        clip = img.set_start(0).set_duration(ado.duration).set_audio(ado)
 
         return clip
 
@@ -196,16 +196,16 @@ class ScreenShotHandler:
         self.redditFontBoldSmall = ImageFont.truetype("font/NotoSans-Bold.ttf",23)
         self.maxWidth = 850 #max width in px of screenshot
 
-    def genComment(self,comment,v):
+    def genComment(self,comment):
         img = Image.new('RGB', (self.maxWidth, 10000), self.redditBG)
         draw = ImageDraw.Draw(img)
-        draw.text((10,10),str(comment.author)+v,font = self.redditFontBoldSmall)
+        draw.text((10,10),str(comment.author),font = self.redditFontBoldSmall)
         crop = self.draw_multiple_line_text(img,str(comment.body),self.redditFont,self.redditText,10,35) + 10
         w,h = img.size
         im2 = img.crop((0,0,w,crop))
         im2.save(f"tempFiles/temp.png")
 
-    def genPost(self,submission,v):
+    def genPost(self,submission):
         img = Image.new('RGB', (self.maxWidth, 1000), self.redditBG)
         draw = ImageDraw.Draw(img)
         draw.text((10, 5), "r/"+str(submission.subreddit), font=self.redditFontBoldSmall)
@@ -353,7 +353,8 @@ class Menu:
             root.withdraw()
             root.attributes('-topmost', True)
             open_file = filedialog.askopenfilenames(filetypes=[("Video Files", ".mp4")])[0]
-            vid = self.bg.crop(VideoFileClip(open_file))   
+            vid = self.bg.crop(VideoFileClip(open_file))
+            print("This may take a while, this saves time when actually making the videos by re cropping and scaling :)")
             vid.write_videofile(f"bgFootage/{os.path.basename(open_file)}.mp4",fps = 24)
 
         elif choice == "2":
@@ -402,7 +403,7 @@ class Menu:
 
         post = self.edit.postFromSort(self.reddit,sub,postNo,commentNo,sort,timeFilt)
 
-        self.edit.greenScreen(post,"bgFootage/"+files[int(bgChoice)]).write_videofile("out.mp4",fps = 24)
+        self.edit.addBg(post,"bgFootage/"+files[int(bgChoice)]).write_videofile("out.mp4",fps = 24)
 
         self.start()
 
@@ -436,7 +437,7 @@ class Menu:
         clip = self.edit.postFromIds(self.reddit,ids,commentNo)#.write_videofile("out.mp4")
         bg = VideoFileClip("bgFootage/"+files[int(bgChoice)])
         
-        self.edit.greenScreen(clip,"bgFootage/"+files[int(bgChoice)]).write_videofile("out.mp4",fps = 24)
+        self.edit.addBg(clip,"bgFootage/"+files[int(bgChoice)]).write_videofile("out.mp4",fps = 24)
 
         self.start()
 
