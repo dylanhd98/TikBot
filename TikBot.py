@@ -75,6 +75,11 @@ class EditHandler:
     def addBg(self,masked_clip,bgPath):
         bg = VideoFileClip(bgPath)
         masked_clip = masked_clip.set_pos('center')
+        
+        #quick fix for too short bg videos, revisit and make better
+        while bg.duration<masked_clip.duration:
+            bg = concatenate_videoclips([bg, bg])
+            
         randStart = random.randint(0,int(bg.duration-masked_clip.duration))
         bg = bg.subclip(randStart,randStart+masked_clip.duration)
         final_clip = mpe.CompositeVideoClip([bg,masked_clip]).set_duration(masked_clip.duration)
